@@ -1212,11 +1212,7 @@ def main():
     print("Focus: Detailed training curves for each fold + SHAP interpretability analysis\n")
 
     # Try to load data from possible paths
-    possible_paths = [
-        '/content/drive/MyDrive/lihc_mice_imputed_final_with_individual_primate_scores.csv',
-        'lihc_mice_imputed_final_with_individual_primate_scores.csv',
-        '/Users/liuzhewei/Downloads/lihc_mice_imputed_final_with_individual_primate_scores.csv'
-    ]
+    possible_paths = ['merge_data_set_with_TMB.csv']
 
     df = None
     for file_path in possible_paths:
@@ -1303,11 +1299,11 @@ def analyze_cv_performance(cv_analysis):
         issues.append("某些fold效能較差 (C-index < 0.55)")
 
     if issues:
-        print(f"\n⚠️  發現的潛在問題:")
+        print(f"\n  發現的潛在問題:")
         for i, issue in enumerate(issues, 1):
             print(f"  {i}. {issue}")
 
-        print(f"\n💡 可能原因與解決方案:")
+        print(f"\n 可能原因與解決方案:")
         print(f"  • 事件分佈不平衡 → 嘗試分層抽樣")
         print(f"  • 驗證集過小 → 考慮不同的CV策略")
         print(f"  • 模型不穩定 → 調整學習率或架構")
@@ -1316,7 +1312,7 @@ def analyze_cv_performance(cv_analysis):
         if std_c > 0.08:
             print(f"  • 變異很大可能表示基本資料問題")
     else:
-        print(f"\n✅ CV效能看起來穩定可靠")
+        print(f"\n CV效能看起來穩定可靠")
 
     # Print SHAP analysis summary if available
     if cv_analysis.get('shap_results'):

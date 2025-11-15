@@ -1212,7 +1212,7 @@ def main():
     print("Focus: Detailed training curves for each fold + SHAP interpretability analysis\n")
 
     # Try to load data from possible paths
-    possible_paths = ['merge_data_set_with_TMB.csv']
+    possible_paths = ['lihc_mice_imputed_final_with_individual_primate_scores.csv']
 
     df = None
     for file_path in possible_paths:
@@ -1261,67 +1261,7 @@ def main():
     
     print(f"\n最終交叉驗證效能: {cv_analysis['mean_c_index']:.4f} ± {cv_analysis['std_c_index']:.4f}")
 
-    # Analyze CV performance issues
-    analyze_cv_performance(cv_analysis)
-
     return cv_analysis
-
-def analyze_cv_performance(cv_analysis):
-    """Analyze cross-validation performance and identify potential issues"""
-    print("\n" + "="*60)
-    print("              CV 效能分析")
-    print("="*60)
-
-    cv_results = cv_analysis['cv_results']
-    mean_c = cv_analysis['mean_c_index']
-    std_c = cv_analysis['std_c_index']
-
-    # Calculate coefficient of variation
-    cv_coefficient = std_c / mean_c if mean_c > 0 else float('inf')
-
-    print(f"效能統計:")
-    print(f"  範圍: {min(cv_results):.4f} - {max(cv_results):.4f}")
-    print(f"  變異係數: {cv_coefficient:.3f}")
-
-    # Identify potential issues
-    issues = []
-
-    if std_c > 0.05:
-        issues.append("fold間變異較大 (std > 0.05)")
-
-    if cv_coefficient > 0.15:
-        issues.append("變異係數較高 (> 15%)")
-
-    if max(cv_results) - min(cv_results) > 0.15:
-        issues.append("最佳和最差fold間差距較大 (> 0.15)")
-
-    if any(c < 0.55 for c in cv_results):
-        issues.append("某些fold效能較差 (C-index < 0.55)")
-
-    if issues:
-        print(f"\n  發現的潛在問題:")
-        for i, issue in enumerate(issues, 1):
-            print(f"  {i}. {issue}")
-
-        print(f"\n 可能原因與解決方案:")
-        print(f"  • 事件分佈不平衡 → 嘗試分層抽樣")
-        print(f"  • 驗證集過小 → 考慮不同的CV策略")
-        print(f"  • 模型不穩定 → 調整學習率或架構")
-        print(f"  • 資料異質性 → 檢查批次效應或離群值")
-
-        if std_c > 0.08:
-            print(f"  • 變異很大可能表示基本資料問題")
-    else:
-        print(f"\n CV效能看起來穩定可靠")
-
-    # Print SHAP analysis summary if available
-    if cv_analysis.get('shap_results'):
-        shap_results = cv_analysis['shap_results']
-        print(f"\n📊 SHAP 分析總結:")
-        print(f"  使用的模型: Fold {shap_results['best_fold']} (最佳效能)")
-        print(f"  分析樣本數: {shap_results['n_samples_analyzed']}")
-        print(f"  特徵重要性已儲存至CSV檔案")
-        print(f"  已生成多種SHAP視覺化圖表")
 
 if __name__ == "__main__":
     try:

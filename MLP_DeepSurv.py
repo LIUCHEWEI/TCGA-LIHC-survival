@@ -1212,7 +1212,7 @@ def main():
     print("Focus: Detailed training curves for each fold + SHAP interpretability analysis\n")
 
     # Try to load data from possible paths
-    possible_paths = ['lihc_mice_imputed_final_with_individual_primate_scores.csv']
+    possible_paths = ['/content/drive/MyDrive/merge_data_set_with_TMB.csv']
 
     df = None
     for file_path in possible_paths:
@@ -1229,7 +1229,7 @@ def main():
 
     if df is None:
         print("錯誤: 找不到資料檔案。請確保資料檔案在正確位置。")
-        print("預期檔案名稱: lihc_mice_imputed_final_with_individual_primate_scores.csv")
+        print("預期檔案名稱: /content/drive/MyDrive/merge_data_set_with_TMB.csv")
         return None
 
     # Run cross-validation with detailed plotting and SHAP analysis

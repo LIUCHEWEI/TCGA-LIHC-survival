@@ -1754,28 +1754,6 @@ class SurvivalXGBoost:
             detailed_table.to_csv(detailed_table_path, index=False)
             print(f"Detailed comparison table saved to: {detailed_table_path}")
 
-            # Analysis summary
-            print(f"\n" + "=" * 60)
-            print("Performance Analysis Summary")
-            print("=" * 60)
-            print(f"Training Performance:")
-            print(f"   Mean ± SD: {train_mean:.3f} ± {train_std:.3f}")
-            if train_ci:
-                print(f"   95% CI: [{train_ci['ci_lower']:.3f}, {train_ci['ci_upper']:.3f}]")
-            print(f"Validation Performance:")
-            print(f"   Mean ± SD: {cv_mean:.3f} ± {cv_std:.3f}")
-            print(f"   95% CI: [{val_ci['ci_lower']:.3f}, {val_ci['ci_upper']:.3f}]")
-            print(f"Overfitting Gap: {diff_mean:+.3f} ± {diff_std:.3f}")
-            if diff_ci:
-                print(f"   Gap 95% CI: [{diff_ci['ci_lower']:.3f}, {diff_ci['ci_upper']:.3f}]")
-
-            if diff_mean > 0.05:
-                print("⚠️  WARNING: Substantial overfitting detected (gap > 0.05)")
-            elif diff_mean > 0.02:
-                print("ℹ️  NOTICE: Mild overfitting observed (gap > 0.02)")
-            else:
-                print("✓ Good generalization - minimal overfitting")
-
         # Table 3: Individual Fold Results (Research Detail)
         print("\n" + "=" * 60)
         print("Table 3: Individual Fold Results (Research Detail)")

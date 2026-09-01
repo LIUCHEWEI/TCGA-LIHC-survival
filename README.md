@@ -16,4 +16,5 @@ mutation-derived features (TMB) with machine learning survival models.
 
 - Python 3.x with `numpy`, `pandas`, `scikit-learn`, `xgboost`, `torch`,
   `lifelines`, `shap`, `matplotlib`, `seaborn`
-- R (for `pTMB_calculation.R`)
+- R with `maftools`, `dplyr`, `tidyr`, `ggplot2`, `GenomicRanges`, `facets`
+  (for `pTMB_calculation.R`)
